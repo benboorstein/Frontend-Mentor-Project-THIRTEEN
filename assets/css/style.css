@@ -30,16 +30,101 @@ html, body {
 
 body {
     font-family: 'Commissioner', sans-serif;
-    padding: ;
+    padding: 0 350px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+button {
+    cursor: pointer;
 }
 
 /****************************************
 header
 ****************************************/
 
+.menu {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.menu li {
+    margin-right: 10px;
+}
+
+.menu button {
+    border: none;
+    cursor: pointer;
+}
+
+
 /****************************************
 main
 ****************************************/
+
+main {
+    background-color: paleturquoise;
+    padding: 0 200px;
+}
+
+main section {
+    margin-top: 20px;
+    background-color: lightblue;
+    padding: 0 25px;
+}
+
+.header-section ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stats-section div:first-child {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.stats-section ul:first-child {
+    margin-right: 35px;
+}
+
+.stats-section ul:nth-of-type(2) {
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+.stats-section ul:last-child {
+    margin-left: 35px;
+}
+
+.stats-section ul li:last-child {
+    font-size: 9px;
+    color: gray;
+}
+
+.stats-section div:last-child {
+    display: flex;
+    justify-content: center;
+}
+
+#points {
+    width: 350px;
+    cursor: pointer;
+}
+
+.reward {
+    margin-top: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0 25px;
+}
+
+.reward ul {
+    display: flex;
+    justify-content: space-between;
+}
 
 /****************************************
 footer
@@ -53,6 +138,183 @@ footer
 .attribution a {
     color: hsl(228, 45%, 44%); /*hsl(hue, saturation, lightness)*/
 }
+
+/****************************************
+modals
+****************************************/
+
+/********** "Back this project" modal - START **********/
+
+.back-proj-modal {
+    display: none; /* hidden by default */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%; /* full width */
+    height: 100%; /* full height */
+    /*overflow: auto;*/ /* enable scroll if needed */
+    background-color: black; /* fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* black w/ opacity */
+}
+
+/* Modal content/box */
+.back-proj-modal-content {
+    background-color: white;
+    margin: 1% auto; /* 2% from the top and centered */
+    padding: 30px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    width: 31%;
+}
+
+.close-modal {
+    cursor: pointer;
+    float: right;
+}
+
+.back-proj-modal-content h2 {
+    font-size: 18px;
+}
+
+.back-proj-modal-content p {
+    font-size: 12px;
+}
+
+.pledge {
+    margin-top: 20px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 19px 12px;
+    font-size: 12px;
+}
+
+.pledge ul:first-child {
+    display: flex;
+}
+
+.pledge ul:first-child, .pledge li:nth-of-type(2), .pledge li:nth-of-type(3) {
+    margin: 0;
+}
+
+.pledge li:nth-of-type(2) {
+    margin-right: 12px;
+    padding-left: 10px;
+}
+
+.pledge h3, .pledge h4 {
+    margin: 0;
+}
+
+.pledge h3 {
+    font-size: 12px;
+}
+
+.pledge ul:first-child li:nth-of-type(4) {
+    position: absolute;
+    right: 580px; /* distance from right */
+}
+
+.pledge p {
+    margin: 0;
+    padding-top: 5px;
+    padding-left: 30px;
+}
+
+/* Selected pledge start */
+
+/*Making a line without any HTML (e.g., <hr>) for it.*/
+.enter-pledge::before {
+    cursor: auto;
+    content: '';
+    display: block;
+    border-bottom: 1.5px solid lightgray;
+    margin: 17px 0;
+}
+
+.is-hidden {
+    display: none;
+}
+
+.enter-pledge-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.enter-pledge-content li:nth-of-type(2) {
+    padding: 0;
+    margin: 0;
+}
+
+#dollars-pledged, .pledge-continue-btn {
+    width: 80px;
+    padding: 6px 0;
+    margin-left: 15px;
+    border-radius: 17px;
+}
+
+.dollars-pledged-form {
+    margin-left: 97px;
+}
+
+.pledge-continue-btn {
+    background-color: hsl(176, 50%, 47%);
+    color: white;
+}
+
+/* Selected pledge end */
+
+/********** "Back this project" modal - END **********/
+
+/********** "Thanks..." modal - START **********/
+
+/* Modal positioning and background */
+.thank-you-modal {
+    display: none; /* hidden by default */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%; /* full width */
+    height: 100%; /* full height */
+    overflow: auto; /* enable scroll if needed */
+    background-color: black; /* fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* black w/ opacity */
+}
+
+/* Modal content/box */
+.thank-you-modal-content {
+    text-align: center;
+    background-color: white;
+    margin: 32% auto; /* 36% from the top and centered */
+    padding: 20px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.thank-you-modal p:nth-of-type(1) {
+    font-weight: 700;
+}
+
+/* Modal close button */
+.got-it-btn {
+    color: white;
+    background-color: hsl(176, 50%, 47%);
+    font-weight: 500;
+    border: none;
+    font-family: 'Commissioner', sans-serif;
+    padding: 15px 30px;
+    border-radius: 40px;
+    margin-bottom: 17px;
+}
+
+.got-it-btn:hover, .got-it-btn:focus {
+    background-color: hsl(176, 72%, 28%);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/********** "Thanks..." modal - END **********/
 
 /************************************************************
 ********** For Desktop/Wide Viewport **********
