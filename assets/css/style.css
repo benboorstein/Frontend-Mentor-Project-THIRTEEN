@@ -196,6 +196,10 @@ modals
     margin: 0;
 }
 
+.check-to-choose {
+    cursor: pointer;
+}
+
 .pledge li:nth-of-type(2) {
     margin-right: 12px;
     padding-left: 10px;
@@ -207,6 +211,7 @@ modals
 
 .pledge h3 {
     font-size: 12px;
+    cursor: pointer;
 }
 
 .pledge ul:first-child li:nth-of-type(4) {
@@ -228,7 +233,7 @@ modals
     content: '';
     display: block;
     border-bottom: 1.5px solid lightgray;
-    margin: 17px 0;
+    margin: 19px 0 17px 0;
 }
 
 .is-hidden {
@@ -246,15 +251,20 @@ modals
     margin: 0;
 }
 
-#dollars-pledged, .pledge-continue-btn {
+.dollars-pledged-form {
+    margin-left: 97px;
+}
+
+.dollars-pledged {
+    cursor: pointer;
+    text-align: center;
+}
+
+.dollars-pledged, .pledge-continue-btn {
     width: 80px;
     padding: 6px 0;
     margin-left: 15px;
     border-radius: 17px;
-}
-
-.dollars-pledged-form {
-    margin-left: 97px;
 }
 
 .pledge-continue-btn {
@@ -276,7 +286,6 @@ modals
     top: 0;
     width: 100%; /* full width */
     height: 100%; /* full height */
-    overflow: auto; /* enable scroll if needed */
     background-color: black; /* fallback color */
     background-color: rgba(0, 0, 0, 0.4); /* black w/ opacity */
 }
@@ -285,15 +294,15 @@ modals
 .thank-you-modal-content {
     text-align: center;
     background-color: white;
-    margin: 32% auto; /* 36% from the top and centered */
+    margin: 14% auto; /* 14% from the top and centered */
     padding: 20px;
     border: 1px solid gray;
     border-radius: 10px;
-    width: 80%;
+    width: 25%;
 }
 
-.thank-you-modal p:nth-of-type(1) {
-    font-weight: 700;
+.thank-you-modal-content h2 {
+    font-size: 21px;
 }
 
 /* Modal close button */

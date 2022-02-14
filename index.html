@@ -42,15 +42,15 @@
             <section class="stats-section">
                 <div>
                     <ul>
-                        <li>$89,914</li>
+                        <li>$<span class="dollars-raised">0</span></li>
                         <li>of $100,000 backed</li>
                     </ul>
                     <ul>
-                        <li>5,007</li>
+                        <li class="num-of-backers">0</li>
                         <li>total backers</li>
                     </ul>
                     <ul>
-                        <li>56</li>
+                        <li class="days-left">0</li>
                         <li>days left</li>
                     </ul>
                 </div>
@@ -78,7 +78,7 @@
                         You get an ergonomic stand made of natural bamboo. You've helped us launch our promotional campaign, and you'll be added to a special Backer member list.
                     </p>
                     <ul>
-                        <li><span class="num-remaining">101</span> left</li>
+                        <li><span class="num-remaining">?</span> left</li>
                         <li><button>Select Reward</button></li>
                     </ul>
                 </div>
@@ -91,7 +91,7 @@
                         You get a Black Special Edition computer stand and a personal thank you. You'll be added to our Backer member list. Shipping is included.
                     </p>
                     <ul>
-                        <li><span class="num-remaining">64</span> left</li>
+                        <li><span class="num-remaining">?</span> left</li>
                         <li><button>Select Reward</button></li>
                     </ul>
                 </div>
@@ -104,8 +104,8 @@
                         You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you. You'll be added to our Backer member list. Shipping is included.
                     </p>
                     <ul>
-                        <li><span class="num-remaining">0</span> left</li>
-                        <li><button>Out of Stock</button></li>
+                        <li><span class="num-remaining">?</span> left</li>
+                        <li><button>Select Reward</button></li>
                     </ul>
                 </div>
             </section>
@@ -146,7 +146,7 @@
                             <li>
                                 <form class="dollars-pledged-form">
                                     <label for="dollars-pledged"></label>
-                                    <input type="number" value="0" id="dollars-pledged" name="dollars-pledged" min="0">
+                                    <input type="text" value="0" class="dollars-pledged" name="dollars-pledged" min="0">
                                 </form>
                             </li>
                             <li><button class="pledge-continue-btn">Continue</button></li>
@@ -163,7 +163,7 @@
                         </li>
                         <li><h3>Bamboo Stand</h3></li>
                         <li><h4>Pledge $25 or more</h4></li>
-                        <li><span>101</span> left</li>
+                        <li><span class="modal-num-remaining">?</span> left</li>
                     </ul>
                     <p>
                         You get an ergonomic stand made of natural bamboo. You've helped us launch our promotional campaign, and you'll be added to a special Backer member list.
@@ -175,7 +175,7 @@
                             <li>
                                 <form class="dollars-pledged-form">
                                     <label for="dollars-pledged"></label>
-                                    <input type="number" value="25" id="dollars-pledged" name="dollars-pledged" min="25">
+                                    <input type="text" value="25" class="dollars-pledged" name="dollars-pledged" min="25">
                                 </form>
                             </li>
                             <li><button class="pledge-continue-btn">Continue</button></li>
@@ -192,7 +192,7 @@
                         </li>
                         <li><h3>Black Edition Stand</h3></li>
                         <li><h4>Pledge $75 or more</h4></li>
-                        <li><span>64</span> left</li>
+                        <li><span class="modal-num-remaining">?</span> left</li>
                     </ul>
                     <p>
                         You get a Black Special Edition computer stand and a personal thank you. You'll be added to our Backer member list. Shipping is included.
@@ -204,7 +204,7 @@
                             <li>
                                 <form class="dollars-pledged-form">
                                     <label for="dollars-pledged"></label>
-                                    <input type="number" value="75" id="dollars-pledged" name="dollars-pledged" min="75">
+                                    <input type="text" value="75" class="dollars-pledged" name="dollars-pledged" min="75">
                                 </form>
                             </li>
                             <li><button class="pledge-continue-btn">Continue</button></li>
@@ -212,7 +212,7 @@
                     </div>
                     <!-- Selected pledge end -->
                 </div>
-                <div class="pledge Mahogany-special-reward">
+                <div class="pledge mahogany-special-reward">
                     <ul>
                         <li>
                             <label class="select-reward">
@@ -221,7 +221,7 @@
                         </li>
                         <li><h3>Mahogany Special Edition</h3></li>
                         <li><h4>Pledge $200 or more</h4></li>
-                        <li><span>0</span> left</li>
+                        <li><span class="modal-num-remaining">?</span> left</li>
                     </ul>
                     <p>
                         You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you. You'll be added to our Backer member list. Shipping is included.
@@ -233,7 +233,7 @@
                             <li>
                                 <form class="dollars-pledged-form">
                                     <label for="dollars-pledged"></label>
-                                    <input type="number" value="200" id="dollars-pledged" name="dollars-pledged" min="200">
+                                    <input type="text" value="200" class="dollars-pledged" name="dollars-pledged" min="200">
                                 </form>
                             </li>
                             <li><button class="pledge-continue-btn">Continue</button></li>
