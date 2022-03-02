@@ -1,15 +1,7 @@
-/* LEFT OFF HERE
-- For "Select Reward" buttons: upon click of button, the "Back this project" modal should open WITH the chosen reward already checked.
-- See an updated progress bar and total money raised based on their pledge total after confirming a pledge (this involves the Continue btn, I think).
-- See the number of total backers increment by one after confirming a pledge.
-*/
-
-
-
-
 // trigger "Back this project" modal
 document.querySelector('.back-proj-btn').addEventListener('click', () => {
     document.querySelector('.back-proj-modal').style.display = 'block'
+    window.scrollTo(0, 0)
 })
 
 // close "Back this project" modal
@@ -17,7 +9,7 @@ document.querySelector('.close-modal').addEventListener('click', () => {
     document.querySelector('.back-proj-modal').style.display = 'none'
 })
 
-// trigger the selected pledge by checking the checkbox
+// in the "Back this project" modal, trigger the selected pledge by checking the checkbox
 document.querySelectorAll('.check-to-choose').forEach(checkbox => {
     checkbox.addEventListener('click', () => {
         if (checkbox.checked) {
@@ -29,7 +21,7 @@ document.querySelectorAll('.check-to-choose').forEach(checkbox => {
     })      
 })
 
-// trigger the selected pledge and check the checkbox by clicking the h3
+// in the "Back this project" modal, trigger the selected pledge and check the checkbox by clicking the h3 instead of the checkbox
 document.querySelectorAll('.pledge h3').forEach(heading => {
     heading.addEventListener('click', () => {
         heading.closest('.pledge').lastElementChild.classList.remove('is-hidden')
@@ -37,14 +29,100 @@ document.querySelectorAll('.pledge h3').forEach(heading => {
     })
 })
 
-// trigger "Thanks..." modal
+// on click of "Bookmark" button, change text content of it
+const bookmarkBtn = document.querySelector('.bookmark-btn') // global variable
+bookmarkBtn.addEventListener('click', () => {
+    bookmarkBtn.textContent === 'Bookmark' ? bookmarkBtn.textContent = 'Bookmarked' : bookmarkBtn.textContent = 'Bookmark'
+})
+
+const stats = { // global variable
+    of100K: 0,
+    totalBackers: 0,
+    daysLeft: 100
+}
+
+// format text relating to 'stats' object
+function formatStatsText(val, el) {
+    if (val.toString().length < 4) {
+        el.textContent = val.toString()
+    } else {
+        el.textContent = val.toString().slice(0, -3) + ',' + val.toString().slice(-3)
+    }
+}
+
+// setting text content or values on load
+formatStatsText(stats.of100K, document.querySelector('.dollars-raised'))
+formatStatsText(stats.totalBackers, document.querySelector('.num-of-backers'))
+formatStatsText(stats.daysLeft, document.querySelector('.days-left'))
+document.getElementById('points').value = 0
+
+// decrementing stats.daysLeft by 1 every 24 hours, setting '.days-left' text accordingly, and disabling pledge-related buttons
+let intervalID = setInterval(decrementDaysLeft, 86400000) // this is the number of milliseconds in a day; in reality I'd find some better way of doing this
+
+function decrementDaysLeft() {
+    stats.daysLeft -= 1
+    formatStatsText(stats.daysLeft, document.querySelector('.days-left'))
+
+    if (stats.daysLeft <= 0) {
+        clearInterval(intervalID)
+        disablePledgeButtons()
+    }
+}
+
+function disablePledgeButtons() {
+    document.querySelector('.back-proj-btn').disabled = 'true'
+    document.querySelectorAll('.select-reward-btn').forEach(btn => {
+        btn.disabled = 'true'
+    })
+}
+
+// the number left of each reward (Bamboo Stand, Black Edition Stand, and Mahogany Special Edition, respectively) at the beginning
+const numLeftOfRewards = [300, 150, 50] // global variable
+
+const spans = Array.from(document.querySelectorAll('.num-remaining')) // global variable
+const modalSpans = Array.from(document.querySelectorAll('.modal-num-remaining')) // global variable
+
 document.querySelectorAll('.pledge-continue-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        if (+(btn.closest('ul').firstElementChild.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.value) > 0) {
+        let dollarsPledgedAsNum = +(btn.closest('ul').firstElementChild.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.value)
+
+        // trigger "Thanks..." modal, and update money raised number and text, backers number and text, and progress bar (aka, range slider)
+        if (dollarsPledgedAsNum > 0) {
             document.querySelector('.back-proj-modal').style.display = 'none'
             document.querySelector('.thank-you-modal').style.display = 'block'
+            window.scrollTo(0, 0)
+
+            stats.of100K += dollarsPledgedAsNum
+            formatStatsText(stats.of100K, document.querySelector('.dollars-raised'))
+
+            stats.totalBackers += 1
+            formatStatsText(stats.totalBackers, document.querySelector('.num-of-backers'))
+
+            document.getElementById('points').value = stats.of100K / 1000 // why '/ 1000'? Because the range slider only has 100 points
         } else {
             btn.closest('ul').firstElementChild.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.value = 'can\'t be 0'
+        }
+
+        // when stats.of100K reaches 100000, freeze stats.of100K number and set applicable text, freeze stats.daysLeft number, disable pledge-related buttons
+        if (stats.of100K >= 100000) {
+            stats.of100K = 100000
+            formatStatsText(stats.of100K, document.querySelector('.dollars-raised'))
+            clearInterval(intervalID)
+            disablePledgeButtons()
+        }
+        
+        // see the number of rewards left diminish by one
+        for (let i = 0; i < numLeftOfRewards.length; i++) {
+            if (btn.closest('.pledge').classList.contains('pledge-with-reward')) { // this is excluding the card with class 'no-reward'
+
+                let pledgeOptionSpan = btn.closest('.pledge').firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.firstElementChild
+
+                if (dollarsPledgedAsNum >= +(pledgeOptionSpan.textContent) && pledgeOptionSpan.closest('li').nextElementSibling.firstElementChild === modalSpans[i]) { // the code on this line after the '&&' is what is mapping the indices of 'numLeftOfRewards' to 'spans' and 'modalSpans'
+                    numLeftOfRewards[i] -= 1
+                    spans[i].textContent = (numLeftOfRewards[i]).toString()
+                    modalSpans[i].textContent = (numLeftOfRewards[i]).toString()
+                }
+            }            
         }
     })
 })
@@ -54,64 +132,22 @@ document.querySelector('.got-it-btn').addEventListener('click', () => {
     document.querySelector('.thank-you-modal').style.display = 'none'
 })
 
-// on click of "Bookmark" button, change text content of it
-const bookmarkBtn = document.querySelector('.bookmark-btn') // global variable
-bookmarkBtn.addEventListener('click', () => {
-    bookmarkBtn.textContent === 'Bookmark' ? bookmarkBtn.textContent = 'Bookmarked' : bookmarkBtn.textContent = 'Bookmark'
-})
-
-let stats = { // global variable
-    of100K: 89914,
-    totalBackers: 5007,
-    daysLeft: 56
-}
-
-function setStatsText(val, el) {
-    if (val.toString().length < 4) {
-        el.textContent = val.toString()
-        // console.log('if: ' + el.textContent)
-    } else if (val.toString().length >= 4 && val.toString().length < 7) {
-        el.textContent = val.toString().slice(0, -3) + ',' + val.toString().slice(-3)
-        // console.log('else if 1: ' + el.textContent)
-    } else if (val.toString().length === 7) {
-        el.textContent = val.toString().slice(0, -6) + ',' + val.toString().slice(-6, -3) + ',' + val.toString().slice(-3)
-        // console.log('else if 2: ' + el.textContent)
-    } else {
-        el.textContent = val.toString()
-        // console.log('else: ' + el.textContent)
-    }
-}
-setStatsText(stats.of100K, document.querySelector('.dollars-raised'))
-setStatsText(stats.totalBackers, document.querySelector('.num-of-backers'))
-setStatsText(stats.daysLeft, document.querySelector('.days-left'))
-
-function setRangeSlider() {
-    document.getElementById('points').value = stats.of100K / 1000 // Why '/ 1000'? Because there are only 100 points on the range slider
-}
-setRangeSlider()
-
-// the number left of each reward...the Bamboo Stand, the Black Edition Stand, and the Mahogany Special Edition, respectively
-const numLeftOfReward = [101, 64, 0] // global variable
-
-const spans = Array.from(document.querySelectorAll('.num-remaining')) // global variable
-const modalSpans = Array.from(document.querySelectorAll('.modal-num-remaining')) // global variable
-
-function setNumsAndStyle() {
+function setNumsAndStyleCards() {
     setNums(spans)
     setNums(modalSpans)
     styleCardsIfZero()
     styleModalCardsIfZero()
 }
-setNumsAndStyle()
+setNumsAndStyleCards()
 
 function setNums(theSpans) {
-    numLeftOfReward.forEach((num, index) => {
+    numLeftOfRewards.forEach((num, index) => {
         theSpans[index].textContent = num.toString()
     })
 }
 
 function styleCardsIfZero() {
-    for (let i = 0; i < numLeftOfReward.length; i++) {
+    for (let i = 0; i < numLeftOfRewards.length; i++) {
         if (spans[i].textContent === '0') {
             spans[i].closest('.reward').style.backgroundColor = 'red'
             spans[i].closest('li').nextElementSibling.firstChild.textContent = 'Out of Stock'
@@ -121,7 +157,7 @@ function styleCardsIfZero() {
 }
 
 function styleModalCardsIfZero() {
-    for (let i = 0; i < numLeftOfReward.length; i++) {
+    for (let i = 0; i < numLeftOfRewards.length; i++) {
         if (modalSpans[i].textContent === '0') {
             modalSpans[i].closest('.pledge').style.backgroundColor = 'red'
             modalSpans[i].closest('ul').firstElementChild.firstElementChild.firstElementChild.style.visibility = 'hidden'
@@ -131,32 +167,28 @@ function styleModalCardsIfZero() {
     }
 }
 
-
-/////////////////////////////////////////////////
-
-// bbbbbb works but is not ideal because there must be some way to make this work more concisely with loops
-// bbbbbb Upon click of a "Select Reward" button, the "Back this project" modal should open and should do so WITH the chosen reward already checked.
+// on click of any of the "Select Reward" buttons, the "Back this project" modal opens and does so *with* the chosen reward card already checked *and* that reward card's '.enter-pledge' div visible / extended downward
 document.querySelectorAll('.select-reward-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        document.querySelector('.back-proj-modal').style.display = 'block' // bbbbbb this is working but I'll have to fix how high the modal presents itself
-        ///// above this is all good
-        if (btn.closest('div').classList.contains('reward-for-25')) { /////
+        document.querySelector('.back-proj-modal').style.display = 'block'
+        window.scrollTo(0, 0)
+        if (btn.closest('div').classList.contains('reward-for-25')) {
             document.querySelectorAll('.check-to-choose').forEach(checkbox => {
-                if (checkbox.closest('div').classList.contains('bamboo-stand-reward')) { /////
+                if (checkbox.closest('div').classList.contains('bamboo-stand-reward')) {
                     checkbox.checked = true
                     checkbox.closest('.pledge').lastElementChild.classList.remove('is-hidden')
                 }
             })
-        } else if (btn.closest('div').classList.contains('reward-for-75')) { /////
+        } else if (btn.closest('div').classList.contains('reward-for-75')) {
             document.querySelectorAll('.check-to-choose').forEach(checkbox => {
-                if (checkbox.closest('div').classList.contains('black-stand-reward')) { /////
+                if (checkbox.closest('div').classList.contains('black-stand-reward')) {
                     checkbox.checked = true
                     checkbox.closest('.pledge').lastElementChild.classList.remove('is-hidden')
                 }
             })
-        } else { /////
+        } else {
             document.querySelectorAll('.check-to-choose').forEach(checkbox => {
-                if (checkbox.closest('div').classList.contains('mahogany-special-reward')) { /////
+                if (checkbox.closest('div').classList.contains('mahogany-special-reward')) {
                     checkbox.checked = true
                     checkbox.closest('.pledge').lastElementChild.classList.remove('is-hidden')
                 }
@@ -164,24 +196,3 @@ document.querySelectorAll('.select-reward-btn').forEach(btn => {
         }
     })
 })
-
-/////////////////////////////////////////////////
-
-
-// /////////////////////////////////////////////////////////////////////
-
-// const selectRewardBtns = Array.from(document.querySelectorAll('.select-reward-btn')) // global variable
-// const rewardDivs = Array.from(document.querySelectorAll('.reward')) // global variable
-// const pledgeDivs = Array.from(document.querySelectorAll('.pledge-with-reward')) // global variable
-
-// // bbbbbb Upon click of a "Select Reward" button, the "Back this project" modal should open and should do so WITH the chosen reward already checked.
-// selectRewardBtns.forEach(btn => {
-//     btn.addEventListener('click', () => {
-//         document.querySelector('.back-proj-modal').style.display = 'block' // bbbbbb this is working but I'll have to fix how high modal presents itself
-//         ///// above this is all good
-        
-
-//     })
-// })
-
-// /////////////////////////////////////////////////////////////////////
