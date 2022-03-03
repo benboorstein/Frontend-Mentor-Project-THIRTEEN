@@ -86,7 +86,7 @@ document.querySelectorAll('.pledge-continue-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         let dollarsPledgedAsNum = +(btn.closest('ul').firstElementChild.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.value)
 
-        // trigger "Thanks..." modal, and update money raised number and text, backers number and text, and progress bar (aka, range slider)
+        // trigger "Thanks..." modal, and update money raised number and text, backers number and text, and progress bar
         if (dollarsPledgedAsNum > 0) {
             document.querySelector('.back-proj-modal').style.display = 'none'
             document.querySelector('.thank-you-modal').style.display = 'block'
@@ -98,7 +98,7 @@ document.querySelectorAll('.pledge-continue-btn').forEach(btn => {
             stats.totalBackers += 1
             formatStatsText(stats.totalBackers, document.querySelector('.num-of-backers'))
 
-            document.getElementById('points').value = stats.of100K / 1000 // why '/ 1000'? Because the range slider only has 100 points
+            document.getElementById('points').value = stats.of100K / 1000 // why '/ 1000'? Because the progress bar only has 100 points
         } else {
             btn.closest('ul').firstElementChild.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.value = 'can\'t be 0'
         }
