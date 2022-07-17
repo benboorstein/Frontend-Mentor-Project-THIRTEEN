@@ -13,7 +13,7 @@ document.querySelector('.close-modal').addEventListener('click', () => {
 document.querySelectorAll('.check-to-choose').forEach(checkbox => {
     checkbox.addEventListener('click', () => {
         if (checkbox.checked) {
-            // Note: I had to do it in this roundabout way because I needed to get the specific '.enter-pledge' div *that corresponds to the specific checkbox being clicked*.
+            // Note: I had to do it in this roundabout way because I needed to get the specific '.enter-pledge' div *that corresponds to the specific checkbox being clicked*. There's more of this sort of thing lower down.
             checkbox.closest('.pledge').lastElementChild.classList.remove('is-hidden')
          } else {
             checkbox.closest('.pledge').lastElementChild.classList.add('is-hidden')
